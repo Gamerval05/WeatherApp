@@ -12,6 +12,8 @@ final class CityListViewController: UITableViewController {
 
     // MARK: - Services
     private let weatherService = WeatherService(httpClient: HTTPClient())
+    private let geoService = GeoService(httpClient: HTTPClient())
+    private let lastLangKey = "last_app_lang"
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -20,19 +22,28 @@ final class CityListViewController: UITableViewController {
         setupTable()
         cities = cityStorage.load()
         if cities.isEmpty {
-            cities = [
-                City(name: "Москва", country: "RU", latitude: 55.7558, longitude: 37.6173),
-                City(name: "Санкт-Петербург", country: "RU", latitude: 59.9311, longitude: 30.3609),
-                City(name: "Сочи", country: "RU", latitude: 43.5855, longitude: 39.7231)
-            ]
+            if appLang == "ru" {
+                cities = [
+                    City(name: "Москва", country: "RU", latitude: 55.7558, longitude: 37.6173),
+                    City(name: "Санкт-Петербург", country: "RU", latitude: 59.9311, longitude: 30.3609),
+                    City(name: "Сочи", country: "RU", latitude: 43.5855, longitude: 39.7231)
+                ]
+            } else {
+                cities = [
+                    City(name: "Moscow", country: "RU", latitude: 55.7558, longitude: 37.6173),
+                    City(name: "Saint Petersburg", country: "RU", latitude: 59.9311, longitude: 30.3609),
+                    City(name: "Sochi", country: "RU", latitude: 43.5855, longitude: 39.7231)
+                ]
+            }
             cityStorage.save(cities)
         }
+        relocalizeCitiesIfNeeded()
         loadWeatherForAllCities()
     }
 
     // MARK: - Setup
     private func setupUI() {
-        title = "Погода"
+        title = L10n.weatherTitle
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .add,
@@ -52,7 +63,6 @@ final class CityListViewController: UITableViewController {
 
     // MARK: - Actions
     @objc private func addTapped() {
-        let geoService = GeoService(httpClient: HTTPClient())
         let searchVM = SearchCityViewModel(geoService: geoService)
         let searchVC = SearchCityViewController(viewModel: searchVM)
 
@@ -112,6 +122,13 @@ final class CityListViewController: UITableViewController {
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 
+    override func tableView(
+        _ tableView: UITableView,
+        titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath
+    ) -> String? {
+        L10n.cityDelete
+    }
+
     // MARK: - Private
     private func addCityIfNeeded(_ city: City) {
         if cities.contains(where: { $0.name.lowercased() == city.name.lowercased() && $0.country == city.country }) {
@@ -164,4 +181,46 @@ final class CityListViewController: UITableViewController {
             }
         }
     }
+
+    private func relocalizeCitiesIfNeeded() {
+        let currentLang = appLang
+        let lastLang = UserDefaults.standard.string(forKey: lastLangKey)
+        guard lastLang != currentLang else { return }
+        UserDefaults.standard.set(currentLang, forKey: lastLangKey)
+
+        guard !cities.isEmpty else { return }
+
+        let group = DispatchGroup()
+        var updated = cities
+
+        for (idx, city) in cities.enumerated() {
+            group.enter()
+            geoService.reverseCityName(lat: city.latitude, lon: city.longitude) { result in
+                defer { group.leave() }
+                if case .success(let localizedName) = result {
+                    updated[idx] = City(
+                        name: localizedName,
+                        country: city.country,
+                        latitude: city.latitude,
+                        longitude: city.longitude
+                    )
+                }
+            }
+        }
+
+        group.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
+            self.cities = updated
+            self.cityStorage.save(updated)
+            self.tableView.reloadData()
+        }
+    }
 }
+
+    // MARK: - Private
+    private var appLang: String {
+        (Bundle.main.preferredLocalizations.first ?? "en")
+            .split(separator: "-")
+            .first
+            .map(String.init) ?? "en"
+    }

@@ -106,7 +106,7 @@ final class CityDetailViewController: UIViewController {
         ])
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Обновить",
+            title: L10n.refresh,
             style: .plain,
             target: self,
             action: #selector(refreshTapped)

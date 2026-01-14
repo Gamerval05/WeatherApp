@@ -1,0 +1,52 @@
+"weather_title" = "Weather";
+
+"city_list_title" = "Cities";
+"city_add" = "Add city";
+"city_delete" = "Delete";
+"city_empty" = "No cities added";
+"city_search_placeholder" = "Search city";
+"error_invalid_url" = "Invalid URL";
+"error_invalid_response" = "Invalid server response";
+"error_server" = "Server error";
+"error_decoding" = "Failed to decode data";
+"error_unknown" = "Something went wrong";
+"search_title" = "City search";
+"search_prompt" = "Search…";
+"search_cancel" = "Cancel";
+"search_empty" = "Nothing found";
+
+"weather_details" = "Weather details";
+"forecast" = "Forecast";
+"feels_like_value" = "Feels like %d°";
+"wind_value" = "Wind: %@ m/s";
+"updated_at_value" = "Updated: %@";
+"temperature" = "Temperature";
+"feels_like" = "Feels like";
+"humidity" = "Humidity";
+"pressure" = "Pressure";
+"wind" = "Wind";
+"visibility" = "Visibility";
+"search_loading_prompt" = "Searching…";
+"pressure_unit" = "hPa";
+"wind_unit" = "m/s";
+"visibility_unit" = "km";
+"city_title_format" = "%@, %@";
+"temperature_value_format" = "%d°";
+"loading" = "Loading…";
+"retry" = "Retry";
+"pull_to_refresh" = "Pull to refresh";
+"last_update" = "Last update";
+
+"error_title" = "Error";
+"error_network" = "Failed to load data";
+"error_unknown" = "Something went wrong";
+
+"ok" = "OK";
+"cancel" = "Cancel";
+"add" = "Add";
+"back" = "Back";
+"refresh" = "Refresh";
+"updated_at" = "Updated";
+
+"placeholder_dash" = "—";
+"city_cell_loading_icon" = "⏳";

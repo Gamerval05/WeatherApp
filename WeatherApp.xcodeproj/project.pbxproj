@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0EBC17702F172261008FE993 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBC176F2F172261008FE993 /* RswiftLibrary */; };
+		0EBC17B72F175142008FE993 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBC17B62F175142008FE993 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EBC17702F172261008FE993 /* RswiftLibrary in Frameworks */,
+				0EBC17B72F175142008FE993 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +87,7 @@
 			name = WeatherApp;
 			packageProductDependencies = (
 				0EBC176F2F172261008FE993 /* RswiftLibrary */,
+				0EBC17B62F175142008FE993 /* Alamofire */,
 			);
 			productName = WeatherApp;
 			productReference = 0EF802832F0157A50028C059 /* WeatherApp.app */;
@@ -117,6 +120,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				0EBC176E2F172261008FE993 /* XCRemoteSwiftPackageReference "R" */,
+				0EBC17B52F175142008FE993 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0EF802842F0157A50028C059 /* Products */;
@@ -371,6 +375,14 @@
 				minimumVersion = 7.8.0;
 			};
 		};
+		0EBC17B52F175142008FE993 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -383,6 +395,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0EBC176E2F172261008FE993 /* XCRemoteSwiftPackageReference "R" */;
 			productName = "plugin:RswiftGenerateInternalResources";
+		};
+		0EBC17B62F175142008FE993 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0EBC17B52F175142008FE993 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -84,35 +84,31 @@ final class CityDetailViewModel {
     // MARK: - Presentation
 
     var titleText: String {
-        "\(city.name), \(city.country)"
+        L10n.cityTitleFormat(city.name, city.country)
     }
 
     var temperatureText: String {
-        guard let weather else { return "—" }
-        return "\(Int(weather.temperature))°"
+        guard let weather else { return L10n.placeholderDash }
+        return L10n.temperatureValueFormat(Int(weather.temperature))
     }
 
     var conditionText: String {
-        weather?.condition.capitalized ?? "—"
+        weather?.condition.capitalized ?? L10n.placeholderDash
     }
 
     var feelsLikeText: String {
-        guard let weather else { return "—" }
-        return "Ощущается как \(Int(weather.feelsLike))°"
+        guard let weather else { return L10n.placeholderDash }
+        return L10n.feelsLikeValue(Int(weather.feelsLike))
     }
 
     var windText: String {
-        guard let weather else { return "—" }
-        let speed = String(format: "%.1f", weather.windSpeed)
-        return "Ветер: \(speed) м/с"
+        guard let weather else { return L10n.placeholderDash }
+        return L10n.windValue(weather.windSpeed)
     }
 
     var updatedAtText: String {
-        guard let weather else { return "—" }
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ru_RU")
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
-        return "Обновлено: \(formatter.string(from: weather.updatedAt))"
+        guard let weather else { return L10n.placeholderDash }
+        let time = DateFormatter.localizedString(from: weather.updatedAt, dateStyle: .none, timeStyle: .short)
+        return L10n.updatedAtValue(time)
     }
 }

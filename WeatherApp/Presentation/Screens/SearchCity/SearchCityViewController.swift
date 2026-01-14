@@ -2,6 +2,7 @@ import UIKit
 
 // MARK: - SearchCityViewController
 final class SearchCityViewController: UITableViewController {
+    private static let searchCellReuseId = "SearchCell"
 
     // MARK: - Dependencies
     private let viewModel: SearchCityViewModel
@@ -35,20 +36,20 @@ final class SearchCityViewController: UITableViewController {
 
     // MARK: - Setup
     private func setupUI() {
-        title = "Поиск города"
+        title = L10n.searchTitle
         view.backgroundColor = .systemBackground
 
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SearchCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Self.searchCellReuseId)
 
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
 
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Введите город"
+        searchController.searchBar.placeholder = L10n.searchPrompt
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Закрыть",
+            title: L10n.searchCancel,
             style: .done,
             target: self,
             action: #selector(closeTapped)
@@ -74,15 +75,15 @@ final class SearchCityViewController: UITableViewController {
                     break
 
                 case .loading:
-                    self.navigationItem.prompt = "Поиск…"
+                    self.navigationItem.prompt = L10n.searchLoadingPrompt
 
                 case .loaded:
                     self.navigationItem.prompt = nil
 
                 case .failed(let message):
                     self.navigationItem.prompt = nil
-                    let alert = UIAlertController(title: "Ошибка", message: message, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Ок", style: .default))
+                    let alert = UIAlertController(title: L10n.errorTitle, message: message, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
                     self.present(alert, animated: true)
                 }
             }
@@ -103,10 +104,10 @@ final class SearchCityViewController: UITableViewController {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Self.searchCellReuseId, for: indexPath)
         let city = results[indexPath.row]
         var content = cell.defaultContentConfiguration()
-        content.text = "\(city.name), \(city.country)"
+        content.text = L10n.cityTitleFormat(city.name, city.country)
         cell.contentConfiguration = content
         cell.accessoryType = .disclosureIndicator
         return cell

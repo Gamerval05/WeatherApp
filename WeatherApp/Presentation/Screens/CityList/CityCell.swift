@@ -2,7 +2,7 @@ import UIKit
 
 // MARK: - CityCell
 final class CityCell: UITableViewCell {
-
+    static let reuseId = "CityCell"
 
     // MARK: - UI
     private let iconLabel = UILabel()
@@ -72,16 +72,16 @@ final class CityCell: UITableViewCell {
 
     // MARK: - Configure
     func configure(city: City, weather: Weather?) {
-        titleLabel.text = "\(city.name), \(city.country)"
+        titleLabel.text = L10n.cityTitleFormat(city.name, city.country)
 
         if let weather {
-            tempLabel.text = "\(Int(weather.temperature))°"
-            subtitleLabel.text = weather.condition.capitalized
+            tempLabel.text = L10n.temperatureValueFormat(Int(weather.temperature))
+            subtitleLabel.text = weather.condition
             iconLabel.text = WeatherIconMapper.icon(for: weather.condition)
         } else {
-            tempLabel.text = "—"
-            subtitleLabel.text = "Загрузка..."
-            iconLabel.text = "⏳"
+            tempLabel.text = L10n.placeholderDash
+            subtitleLabel.text = L10n.loading
+            iconLabel.text = L10n.cityCellLoadingIcon
         }
     }
 }

@@ -17,7 +17,8 @@ final class WeatherService: WeatherServiceProtocol {
         lon: Double,
         completion: @escaping (Result<Weather, Error>) -> Void
     ) {
-        guard let url = Endpoints.currentWeather(lat: lat, lon: lon) else {
+        let lang = Bundle.main.preferredLocalizations.first ?? "en"
+        guard let url = Endpoints.currentWeather(lat: lat, lon: lon, lang: lang) else {
             completion(.failure(NetworkError.invalidURL))
             return
         }

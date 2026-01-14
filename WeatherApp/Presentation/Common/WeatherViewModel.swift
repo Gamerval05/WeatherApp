@@ -1,5 +1,3 @@
-
-
 import Foundation
 
 // MARK: - WeatherViewModel
@@ -47,37 +45,35 @@ final class WeatherViewModel {
 
             case .failure(let error):
                 self.weather = nil
-                self.state = .failed(error.localizedDescription)
+                self.state = .failed(Self.localizedErrorMessage(for: error))
             }
         }
     }
 
     // MARK: - Presentation
     var temperatureText: String {
-        guard let weather else { return "—" }
-        return "\(Int(weather.temperature))°"
+        guard let weather else { return L10n.placeholderDash }
+        return L10n.temperatureValueFormat(Int(weather.temperature))
     }
 
     var feelsLikeText: String {
-        guard let weather else { return "—" }
-        return "Ощущается как \(Int(weather.feelsLike))°"
+        guard let weather else { return L10n.placeholderDash }
+        return L10n.feelsLikeValue(Int(weather.feelsLike))
     }
 
     var conditionText: String {
-        weather?.condition.capitalized ?? "—"
+        weather?.condition.capitalized ?? L10n.placeholderDash
     }
 
     var windText: String {
-        guard let weather else { return "—" }
-        return "Ветер: \(String(format: "%.1f", weather.windSpeed)) м/с"
+        guard let weather else { return L10n.placeholderDash }
+        return L10n.windValue(weather.windSpeed)
     }
 
     var updatedAtText: String {
-        guard let weather else { return "" }
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ru_RU")
-        formatter.dateFormat = "HH:mm"
-        return "Обновлено: \(formatter.string(from: weather.updatedAt))"
+        guard let weather else { return L10n.placeholderDash }
+        let time = DateFormatter.localizedString(from: weather.updatedAt, dateStyle: .none, timeStyle: .short)
+        return L10n.updatedAtValue(time)
     }
 
     // MARK: - Private
@@ -99,5 +95,12 @@ final class WeatherViewModel {
                 self.onWeatherChanged?(weather)
             }
         }
+    }
+
+    private static func localizedErrorMessage(for error: Error) -> String {
+        if error is URLError {
+            return L10n.errorNetwork
+        }
+        return L10n.errorUnknown
     }
 }

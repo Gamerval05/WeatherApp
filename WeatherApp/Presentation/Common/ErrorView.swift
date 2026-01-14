@@ -44,7 +44,7 @@ final class ErrorView: UIView {
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0
 
-        retryButton.setTitle("Повторить", for: .normal)
+        retryButton.setTitle(L10n.retry, for: .normal)
         retryButton.addTarget(self, action: #selector(retryTapped), for: .touchUpInside)
 
         let stack = UIStackView(arrangedSubviews: [titleLabel, retryButton])

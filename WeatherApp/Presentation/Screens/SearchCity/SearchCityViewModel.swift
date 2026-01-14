@@ -53,8 +53,17 @@ final class SearchCityViewModel {
 
             case .failure(let error):
                 self.results = []
-                self.state = .failed(error.localizedDescription)
+                self.state = .failed(Self.localizedErrorMessage(for: error))
             }
         }
+    }
+
+    // MARK: - Private
+    private static func localizedErrorMessage(for error: Error) -> String {
+        // Keep mapping simple and user-friendly.
+        if error is URLError {
+            return L10n.errorNetwork
+        }
+        return L10n.errorUnknown
     }
 }
