@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0EBC17702F172261008FE993 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 0EBC176F2F172261008FE993 /* RswiftLibrary */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		0EF802832F0157A50028C059 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EBC17702F172261008FE993 /* RswiftLibrary in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,12 +77,14 @@
 			buildRules = (
 			);
 			dependencies = (
+				0EBC17792F1726BC008FE993 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				0EF802852F0157A50028C059 /* WeatherApp */,
 			);
 			name = WeatherApp;
 			packageProductDependencies = (
+				0EBC176F2F172261008FE993 /* RswiftLibrary */,
 			);
 			productName = WeatherApp;
 			productReference = 0EF802832F0157A50028C059 /* WeatherApp.app */;
@@ -104,9 +111,13 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 0EF8027A2F0157A50028C059;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0EBC176E2F172261008FE993 /* XCRemoteSwiftPackageReference "R" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0EF802842F0157A50028C059 /* Products */;
 			projectDirPath = "";
@@ -136,6 +147,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0EBC17792F1726BC008FE993 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 0EBC17782F1726BC008FE993 /* RswiftGenerateInternalResources */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		0EF802972F0157A60028C059 /* Debug */ = {
@@ -259,6 +277,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -315,6 +334,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -341,6 +361,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0EBC176E2F172261008FE993 /* XCRemoteSwiftPackageReference "R" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mac-cain13/R.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0EBC176F2F172261008FE993 /* RswiftLibrary */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0EBC176E2F172261008FE993 /* XCRemoteSwiftPackageReference "R" */;
+			productName = RswiftLibrary;
+		};
+		0EBC17782F1726BC008FE993 /* RswiftGenerateInternalResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0EBC176E2F172261008FE993 /* XCRemoteSwiftPackageReference "R" */;
+			productName = "plugin:RswiftGenerateInternalResources";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0EF8027B2F0157A50028C059 /* Project object */;
 }
